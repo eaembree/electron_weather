@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Weather API</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js');
+    var $ = jQuery = require("jquery");
+  </script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+  crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container">
     <h1>Open Weather API</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
     <!--
@@ -14,39 +37,56 @@
     -->
 
     <form>
-      <select id="cityId"></select>
-      <button type="button" id="get-data-button">Get Weather</button>
+      <div class="row">
+        <div class="col-xs-3 col-sm-3 col-md-2">
+          <select id="cityId" class="form-control"></select>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-2">
+          <button type="button" class="btn btn-primary" id="get-data-button">Get Weather</button>
+        </div>
+      </div>
     </form>
 
-  <div id="weather-content" hidden="hidden">
+    <div id="weather-content" hidden="hidden">
       <div>
         <h3>City</h3>
         <div>City Name: <span id="name"></span></div>
         <div>Latitude: <span id="lat"></span></div>
         <div>Longitude: <span id="lon"></span></div>
       </div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#current" aria-controls="current" role="tab" data-toggle="tab">Current</a></li>
+        <li role="presentation"><a href="#five-day" aria-controls="five-day" role="tab" data-toggle="tab">5 day</a></li>
+        <li role="presentation"><a href="#map" aria-controls="map" role="tab" data-toggle="tab">Map</a></li>
+      </ul>
 
-      <div>
-        <h3>Weather</h3>
-        <div>Id: <span id="id"></span></div>
-        <div>Main: <span id="main"></span></div>
-        <div>Description: <span id="description"></span></div>
-        <div>Icon: <span id="icon"></span></div>
-      </div>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="current">
+          <div>
+            <h3>Weather</h3>
+            <div>Id: <span id="id"></span></div>
+            <div>Main: <span id="main"></span></div>
+            <div>Description: <span id="description"></span></div>
+            <div>Icon: <span id="icon"></span></div>
+            <img id="curr-icon" src="" />
+          </div>
 
-      <div>
-        <h3>Main</h3>
-        <div>Humidity: <span id="humidity"></span>%</div>
-        <div>Temperature: <span id="temp"></span></div>
-        <div>Minimum Temperature: <span id="temp_min"></span></div>
-        <div>Maximum Temperature: <span id="temp_max"></span></div>
-        <div>Atmospheric pressure: <span id="pressure"></span></div>
+          <div>
+            <h3>Main</h3>
+            <div>Humidity: <span id="humidity"></span>%</div>
+            <div>Temperature: <span id="temp"></span></div>
+            <div>Minimum Temperature: <span id="temp_min"></span></div>
+            <div>Maximum Temperature: <span id="temp_max"></span></div>
+            <div>Atmospheric pressure: <span id="pressure"></span></div>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="five-day">...</div>
+        <div role="tabpanel" class="tab-pane" id="map">...</div>
       </div>
+    </div>
   </div>
-  </body>
+</body>
 
-  <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
-  </script>
 </html>
