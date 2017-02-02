@@ -140,7 +140,9 @@ $(document).ready(function () {
     });
 });
 
-
+function unixTimeToJsDate(ut){
+    return new Date(ut * 1000);
+}
 
 function getCityData(cityId) {
     $.ajax({
@@ -168,6 +170,53 @@ function getCityData(cityId) {
             $("#curr-icon").attr('src', i);
 
             $('#weather-content').show();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('AJAX ERROR');
+            console.log(jqXHR.responseJSON);
+            console.log(textStatus);
+            console.log(errorThrown);
+        },
+        complete: function (jqXHR, textStatus) {
+        }
+    });
+
+    $.ajax({
+        type: 'GET',
+        crossDomain: true,
+        url: "http://api.openweathermap.org/data/2.5/forecast?id=" + cityId + "&units=imperial" + "&APPID=" + APPID,
+        success: function (data, textStatus, jqXHR) {
+            let result = `
+            <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Pressure</th>
+                    <th>Humidity</th>
+                    <th>Temperature</th>
+                    <th>Temperature Min</th>
+                    <th>Temperature Max</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+            data.list.forEach((x) => {
+                x.realDate = moment(unixTimeToJsDate(x.dt));
+
+                result += `
+                <tr>
+                    <td>${x.realDate.format("ddd, hA")}</td>
+                    <td>${x.main.pressure}</td>
+                    <td>${x.main.humidity}</td>
+                    <td>${x.main.temp}</td>
+                    <td>${x.main.temp_min}</td>
+                    <td>${x.main.temp_max}</td>
+                </tr>`;
+            });
+
+            result += "</tbody></table>";
+
+            $('#five-day-content').html(result);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log('AJAX ERROR');
